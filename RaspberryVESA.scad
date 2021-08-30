@@ -48,12 +48,12 @@ y_radius=radius(piX/2-vesaDia*sqrt(2));
 //        translate([vesa/2,(vesa+piY)/2+x_radius,0])cylinder(r=x_radius,h=vesaHeight);    
 //    }
 //    //Y-CUT
-//    translate([0,(vesa-piY)/2-x_radius,0]){
+//    translate([0,(vesa-piY)/2-x_radius,0]){//???
 //        rotate([0,0,45]){
 //            cube([(2*x_radius+piY)/sqrt(2),(2*x_radius+piY)/sqrt(2), vesaHeight]);
 //        }
 //    }
-//    translate([vesa,(vesa-piY)/2-x_radius,0]){
+//    translate([vesa,(vesa-piY)/2-x_radius,0]){//???
 //        rotate([0,0,45]){
 //            cube([(2*x_radius+piY)/sqrt(2),(2*x_radius+piY)/sqrt(2), vesaHeight]);
 //        }
@@ -74,7 +74,7 @@ difference() {
         translate([(vesa+piX)/2+y_radius,vesa/2,0])cylinder(r=y_radius,h=vesaHeight);    
     }
     //X-CUT
-    translate([vesa/2,(vesa-piX)/2-y_radius,0]){
+    translate([vesa/2,(vesa-piX)/2-y_radius,0]){//??
     rotate([0,0,45]){
             cube([(2*y_radius+piX)/sqrt(2),(2*y_radius+piX)/sqrt(2), vesaHeight]);
         }
