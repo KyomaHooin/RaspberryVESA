@@ -4,70 +4,71 @@
 
 include <rpi.scad>;
 
-$fn=50;
+$fn=80;
 
 vesa=100;
 vesaDia=10;
-vesaHeight=3.5;
+vesaHeight=4;
 
-piX=65;
-piY=56;
-piThick=1.27;
-piHoleDia=2.75;
-piHoleOffset=3.5;
+caseThick=2;
+caseX=piX+2*caseThick;
+caseY=piY+2*caseThick;
 
 function radius(x) = x*cos(45)/(1-cos(45));
 
-x_radius=radius(piY/2-vesaDia*sqrt(2));
-y_radius=radius(piX/2-vesaDia*sqrt(2));
+x_radius=radius(caseY/2-vesaDia*sqrt(2));
+y_radius=radius(caseX/2-vesaDia*sqrt(2));
 
 difference() {
-    translate([vesa/2,(vesa-piY)/2-x_radius,0]){
+    translate([vesa/2,(vesa-caseY)/2-x_radius,0]){
         rotate([0,0,45]){
-            cube([(2*x_radius+piY)/sqrt(2),(2*x_radius+piY)/sqrt(2), vesaHeight]);
+            cube([(2*x_radius+caseY)/sqrt(2),(2*x_radius+caseY)/sqrt(2), vesaHeight]);
         }
     }
     //X-OUTER CUT
-        translate([vesa/2,(vesa-piY)/2-x_radius,0])cylinder(r=x_radius,h=vesaHeight);    
-        translate([vesa/2,(vesa+piY)/2+x_radius,0])cylinder(r=x_radius,h=vesaHeight);    
+        translate([vesa/2,(vesa-caseY)/2-x_radius,0])cylinder(r=x_radius,h=vesaHeight);    
+        translate([vesa/2,(vesa+caseY)/2+x_radius,0])cylinder(r=x_radius,h=vesaHeight);    
     //Y-CUT
-    translate([(vesa-piY)/2-x_radius,(vesa-piY)/2-x_radius,0]){
+    translate([(vesa-caseY)/2-x_radius,(vesa-caseY)/2-x_radius,0]){
         rotate([0,0,45]){
-            cube([(2*x_radius+piY)/sqrt(2),(2*x_radius+piY)/sqrt(2), vesaHeight]);
+            cube([(2*x_radius+caseY)/sqrt(2),(2*x_radius+caseY)/sqrt(2), vesaHeight]);
         }
     }
-    translate([vesa/2+(2*x_radius+piY)/2,(vesa-piY)/2-x_radius,0]){
+    translate([vesa/2+(2*x_radius+caseY)/2,(vesa-caseY)/2-x_radius,0]){
         rotate([0,0,45]){
-            cube([(2*x_radius+piY)/sqrt(2),(2*x_radius+piY)/sqrt(2), vesaHeight]);
+            cube([(2*x_radius+caseY)/sqrt(2),(2*x_radius+caseY)/sqrt(2), vesaHeight]);
         }
     }
 }
 
 difference() {
-   translate([vesa/2,(vesa-piX)/2-y_radius,0]){
+   translate([vesa/2,(vesa-caseX)/2-y_radius,0]){
         rotate([0,0,45]){
-            cube([(2*y_radius+piX)/sqrt(2),(2*y_radius+piX)/sqrt(2), vesaHeight]);
+            cube([(2*y_radius+caseX)/sqrt(2),(2*y_radius+caseX)/sqrt(2), vesaHeight]);
         }
     }
     //Y-OUTER CUT
-        translate([(vesa-piX)/2-y_radius,vesa/2,0])cylinder(r=y_radius,h=vesaHeight);    
-        translate([(vesa+piX)/2+y_radius,vesa/2,0])cylinder(r=y_radius,h=vesaHeight);    
+        translate([(vesa-caseX)/2-y_radius,vesa/2,0])cylinder(r=y_radius,h=vesaHeight);    
+        translate([(vesa+caseX)/2+y_radius,vesa/2,0])cylinder(r=y_radius,h=vesaHeight);    
     //X-CUT
-    translate([vesa/2,(vesa-piX)/2-y_radius,0]){
+    translate([vesa/2,(vesa-caseX)/2-y_radius,0]){
     rotate([0,0,45]){
-            cube([(2*y_radius+piX)/sqrt(2)/2,(2*y_radius+piX)/sqrt(2)/2, vesaHeight]);
+            cube([(2*y_radius+caseX)/sqrt(2)/2,(2*y_radius+caseX)/sqrt(2)/2, vesaHeight]);
         }
     }
     translate([vesa/2,vesa/2,0]){
         rotate([0,0,45]){
-            cube([(2*y_radius+piX)/sqrt(2)/2,(2*y_radius+piX)/sqrt(2)/2, vesaHeight]);
+            cube([(2*y_radius+caseX)/sqrt(2)/2,(2*y_radius+caseX)/sqrt(2)/2, vesaHeight]);
         }
     }
 }
 
 //PI
 color("red"){
-    translate ([(vesa-piX)/2,(vesa-piY)/2,5]) cube([piX, piY, vesaHeight]);
+    difference() {
+        translate ([(vesa-caseX)/2,(vesa-caseY)/2,vesaHeight]) cube([caseX, caseY, piThick]);
+        translate ([(vesa-caseX)/2+caseThick,(vesa-caseY)/2+caseThick,vesaHeight-1]) cube([piX, piY, piThick+2]);
+    }
 }
 
 difference() {
