@@ -19,6 +19,28 @@ function radius(x) = x*cos(45)/(1-cos(45));
 x_radius=radius(caseY/2-vesaDia*sqrt(2));
 y_radius=radius(caseX/2-vesaDia*sqrt(2));
 
+module bottom_spacer() {
+    difference() {
+        union() {
+            //base
+            cylinder(r=4,h=2);
+            cylinder(r=6,h=2);
+        }
+        //hole
+        translate([0,0,-1]) cylinder(r=2,h=4);
+        // donut
+        translate([0,0,2]) {
+            rotate_extrude(convexity=10) {
+                translate([6,0,0])circle(r=2);
+            }
+        }
+    }
+}
+
+bottom_spacer();
+
+module vesa_bottom() {
+
 difference() {
     translate([vesa/2,(vesa-caseY)/2-x_radius,0]){
         rotate([0,0,45]){
@@ -95,4 +117,6 @@ difference() {
     translate([vesa,0,vesaHeight-2.2])cylinder(r1=4, r2=7.3, h=2.2);
     translate([0,vesa,-3.5])cylinder(r=4,h=10);
     translate([0,vesa,vesaHeight-2.2])cylinder(r1=4, r2=7.3, h=2.2);
+}
+
 }
