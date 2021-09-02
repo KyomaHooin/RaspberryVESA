@@ -14,30 +14,29 @@ caseThick=2;
 caseX=piX+2*caseThick;
 caseY=piY+2*caseThick;
 
+spacerHeight=2;
+
 function radius(x) = x*cos(45)/(1-cos(45));
 
 x_radius=radius(caseY/2-vesaDia*sqrt(2));
 y_radius=radius(caseX/2-vesaDia*sqrt(2));
 
 module bottom_spacer() {
+
     difference() {
-        union() {
-            //base
-            cylinder(r=4,h=2);
-            cylinder(r=6,h=2);
+        difference() {
+            cylinder(r=4,h=spacerHeight);
+            translate([0,0,spacerHeight/2])cylinder(d=1.5,h=spacerHeight);
         }
-        //hole
-        translate([0,0,-1]) cylinder(r=2,h=4);
-        // donut
         translate([0,0,2]) {
-            rotate_extrude(convexity=10) {
-                translate([6,0,0])circle(r=2);
+            rotate_extrude() {
+                translate([4,0,0])circle(r=2);
             }
-        }
+            }
     }
 }
 
-bottom_spacer();
+//bottom_spacer();
 
 module vesa_bottom() {
 
@@ -86,12 +85,12 @@ difference() {
 }
 
 //PI
-color("red"){
-    difference() {
-        translate ([(vesa-caseX)/2,(vesa-caseY)/2,vesaHeight]) cube([caseX, caseY, piThick]);
-        translate ([(vesa-caseX)/2+caseThick,(vesa-caseY)/2+caseThick,vesaHeight-1]) cube([piX, piY, piThick+2]);
-    }
-}
+//color("red"){
+//     difference() {
+//        translate ([(vesa-caseX)/2,(vesa-caseY)/2,vesaHeight]) cube([caseX, caseY, piThick]);
+//        translate ([(vesa-caseX)/2+caseThick,(vesa-caseY)/2+caseThick,vesaHeight-1]) cube([piX, piY, piThick+2]);
+//    }
+//}
 
 difference() {
     //VESA1
@@ -119,4 +118,16 @@ difference() {
     translate([0,vesa,vesaHeight-2.2])cylinder(r1=4, r2=7.3, h=2.2);
 }
 
+}
+
+// spacer
+translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
+translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
+translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
+translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
+
+vesa_bottom();
+
+translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
+    translate([piX,piY,0])rotate(180,0,0) rpi();
 }
