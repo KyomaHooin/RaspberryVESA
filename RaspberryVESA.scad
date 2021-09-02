@@ -13,6 +13,7 @@ vesaHeight=4;
 caseThick=2;
 caseX=piX+2*caseThick;
 caseY=piY+2*caseThick;
+caseHeight=caseThick+10;
 
 spacerHeight=2;
 
@@ -32,7 +33,7 @@ module bottom_spacer() {
             rotate_extrude() {
                 translate([4,0,0])circle(r=2);
             }
-            }
+        }
     }
 }
 
@@ -120,6 +121,28 @@ difference() {
 
 }
 
+module vesa_top() {
+        difference() {
+        minkowski() {
+            cube([piX,piY,caseHeight]);
+            sphere(r=2);
+        }
+        // filler
+        translate([caseThick,caseThick,caseThick]) {
+            minkowski() {
+                cube([piX-2*caseThick,piY-2*caseThick,caseHeight+5]);
+                sphere(r=2);
+            }
+        }
+        //cut
+        translate([-caseThick,-caseThick,caseHeight]) {
+            cube([caseX,caseY,caseThick]);
+        }
+        // pi
+        translate([0,piY,caseHeight]) rotate([0,180,180])rpi(edge=5);  
+    }
+}
+
 // spacer
 translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
 translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
@@ -128,6 +151,9 @@ translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeigh
 
 vesa_bottom();
 
-translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
-    translate([piX,piY,0])rotate(180,0,0) rpi();
+translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight]){
+    translate([piX,0,caseHeight])rotate([0,180,0]) vesa_top();
 }
+//translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
+//    translate([piX,piY,0])rotate(180,0,0) rpi();
+//}
