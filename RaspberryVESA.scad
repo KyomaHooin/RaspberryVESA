@@ -11,8 +11,8 @@ vesaDia=10;
 vesaHeight=4;
 
 caseThick=2;
-caseX=piX+2*caseThick;
-caseY=piY+2*caseThick;
+caseX=piX+2*caseThick+0.5;
+caseY=piY+2*caseThick+0.5;
 caseHeight=caseThick+10;
 
 spacerHeight=2;
@@ -53,7 +53,7 @@ difference() {
     //Y-CUT
     translate([(vesa-caseY)/2-x_radius,(vesa-caseY)/2-x_radius,0]){
         rotate([0,0,45]){
-            cube([(2*x_radius+caseY)/sqrt(2),(2*x_radius+caseY)/sqrt(2), vesaHeight]);
+           cube([(2*x_radius+caseY)/sqrt(2),(2*x_radius+caseY)/sqrt(2), vesaHeight]);
         }
     }
     translate([vesa/2+(2*x_radius+caseY)/2,(vesa-caseY)/2-x_radius,0]){
@@ -144,16 +144,16 @@ module vesa_top() {
 }
 
 // spacer
-translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
-translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
-translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
-translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
+//translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
+//translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
+//translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
+//translate([(vesa-piX)/2+piX-piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
 
 vesa_bottom();
 
 translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight]){
     translate([piX,0,caseHeight])rotate([0,180,0]) vesa_top();
 }
-//translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
-//    translate([piX,piY,0])rotate(180,0,0) rpi();
-//}
+translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
+    translate([piX,piY,0])rotate([0,0,180]) rpi();
+}
