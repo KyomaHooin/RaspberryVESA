@@ -121,6 +121,7 @@ difference() {
 
 }
 
+
 module vesa_top() {
         difference() {
         minkowski() {
@@ -143,6 +144,26 @@ module vesa_top() {
     }
 }
 
+
+module case_bottom() {
+difference(){
+minkowski() {
+    cube([piX+1,piY+1,4]);
+    cylinder(r=2,h=2);
+}
+        // filler
+        translate([caseThick,caseThick,-1]) {
+            minkowski() {
+                cube([piX+1-2*caseThick,piY+1-2*caseThick,12]);
+                 cylinder(r=2,h=12);
+            }
+       }
+}
+}
+
+//translate([0.5,0.5,0])rpi();
+//vesa_top();
+
 // spacer
 //translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piHoleOffset,vesaHeight]) bottom_spacer();
 //translate([(vesa-piX)/2+piHoleOffset,(vesa-piY)/2+piY-piHoleOffset,vesaHeight]) bottom_spacer();
@@ -151,9 +172,11 @@ module vesa_top() {
 
 vesa_bottom();
 
-translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight]){
-    translate([piX,0,caseHeight])rotate([0,180,0]) vesa_top();
-}
-translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
-    translate([piX,piY,0])rotate([0,0,180]) rpi();
-}
+translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight]) case_bottom();
+
+//translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight]){
+//    translate([piX,0,caseHeight])rotate([0,180,0]) vesa_top();
+//}
+//translate([(vesa-piX)/2,(vesa-piY)/2,vesaHeight+spacerHeight]) {
+//    translate([piX,piY,0])rotate([0,0,180]) rpi();
+//}
